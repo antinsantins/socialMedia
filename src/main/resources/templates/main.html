@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Main</title>
+    <title>Main page</title>
 </head>
 <body>
-Hello page
+<h1 th:text="'hello ' + ${#authentication.getPrincipal().getUsername()}"></h1>
+<a href="/socialmedia/users">All users</a>
 </body>
 </html>
