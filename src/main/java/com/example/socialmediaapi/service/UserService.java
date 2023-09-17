@@ -4,6 +4,9 @@ import com.example.socialmediaapi.entity.StatusEnum;
 import com.example.socialmediaapi.entity.User;
 import com.example.socialmediaapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,8 @@ public class UserService {
     private BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
-    public List<User> getAllUser() {
-        return userRepository.findAll();
-    }
-    public List<User> getAllUserWithStatus(String status) {
-        return userRepository.findAllByStatus(StatusEnum.valueOf(status));
+    public Page<User> getUserWithPagingAndFiltering(Specification<User> specification, Pageable pageable) {
+        return userRepository.findAll(specification, pageable);
     }
     public void saveUser(User user) {
         user.setPassword(encoder().encode(user.getPassword()));
